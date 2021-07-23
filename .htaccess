@@ -1,0 +1,14 @@
+RewriteEngine On  
+RewriteRule ^api/([0-9a-zA-Z_-]*)$ api.php?customer_id=$1 [NC,L]
+
+RewriteEngine On # Turn on the rewriting engine
+RewriteRule ^patient/?$ patient_api.php [NC,L]
+RewriteRule ^patient/([0-9]+)/?$ patient_php.php?email=$1&&password=$2 [NC,L]
+
+RewriteRule ^exercise/?$ exercise_api.php [NC,L]
+RewriteRule ^exercise/([0-9]+)/?$ exercise_api.php?type=$1 [NC,L]
+RewriteRule ^exercise/([0-9]+)/?$ exercise_api.php?id=$1 [NC,L]
+
+RewriteRule ^patient_exercise/?$ patient_exercise_api.php [NC,L]
+RewriteRule ^patient_exercise/([0-9]+)/?$ patient_exercise_api.php?patient_id=$1 [NC,L]
+RewriteRule ^patient_exercise/([0-9]+)/?$ patient_exercise_api.php?patient_id=$1&start_date=$2&end_date=$3 [NC,L]
