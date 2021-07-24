@@ -1,8 +1,7 @@
 <?php
 // required header
-header("Access-Control-Allow-Origin: *");
-// header("Content-Type: application/json; charset=UTF-8");
-// header('Access-Control-Allow-Methods': 'POST, GET, OPTIONS');
+header('Access-Control-Allow-Origin: *');
+
 
 require_once "connection.php";
 
@@ -26,7 +25,7 @@ class PatientExercise
 			'data' => $data
 		);
 
-		header('Content-Type: application/json');
+		// header('Content-Type: application/json');
 		echo json_encode($response);
 	}
 
@@ -53,49 +52,54 @@ class PatientExercise
 			'data' => $data
 		);
 
-		header('Content-Type: application/json');
+		// header('Content-Type: application/json');
+		echo json_encode($response);
+	}
+
+	public function response_request()
+	{
+		
+		$response=array('status' => 1, 'message' => 'success');
 		echo json_encode($response);
 	}
 
 	public function insert_patient_exercise()
 		{
-			// global $con;
-			// $arrcheckpost = array(
-			// 	'id_pasien' => '', 'id_latihan' => '', 'tanggal' => '', 
-			// 	'waktu_mulai' => '', 'waktu_selesai'   => '',
-			// 	'pra_bs' => '', 'pasca_bs' => '', 'pra_sato2' => '', 
-			// 	'pasca_sato2' => '', 'pra_hr' => '', 'pasca_hr' => '' );
+			global $con;
+			$arrcheckpost = array(
+				'id_pasien' => '', 'id_latihan' => '', 'tanggal' => '', 
+				'waktu_mulai' => '', 'waktu_selesai'   => '',
+				'pra_bs' => '', 'pasca_bs' => '', 'pra_sato2' => '', 
+				'pasca_sato2' => '', 'pra_hr' => '', 'pasca_hr' => '' );
 			
-			// if(count($_POST) == count($arrcheckpost)) {
-			// 	$query = "INSERT INTO latihan_pasien (id_pasien, id_latihan, tanggal, waktu_mulai, waktu_selesai, pra_bs, pasca_bs, pra_sato2, pasca_sato2, pra_hr, pasca_hr) VALUES ($_POST[id_pasien], $_POST[id_latihan], '$_POST[tanggal]', '$_POST[waktu_mulai]', '$_POST[waktu_selesai]', $_POST[pra_bs], $_POST[pasca_bs], $_POST[pra_sato2], $_POST[pasca_sato2], $_POST[pra_hr], $_POST[pasca_hr])";
+			if(count($_POST) == count($arrcheckpost)) {
+				$query = "INSERT INTO latihan_pasien (id_pasien, id_latihan, tanggal, waktu_mulai, waktu_selesai, pra_bs, pasca_bs, pra_sato2, pasca_sato2, pra_hr, pasca_hr) VALUES ($_POST[id_pasien], $_POST[id_latihan], '$_POST[tanggal]', '$_POST[waktu_mulai]', '$_POST[waktu_selesai]', $_POST[pra_bs], $_POST[pasca_bs], $_POST[pra_sato2], $_POST[pasca_sato2], $_POST[pra_hr], $_POST[pasca_hr])";
 
 
-			// 	$result = mysqli_query($con, $query);
+				$result = mysqli_query($con, $query);
 				
-			// 	if($result)
-			// 	{
-			// 		$response=array(
-			// 			'status' => 1,
-			// 			'message' =>'Patient Exercise Added Successfully.'
-			// 		);
-			// 	}
-			// 	else
-			// 	{
-			// 		$response=array(
-			// 			'status' => 0,
-			// 			'query' => $query,
-			// 			'message' =>'Patient Exercise Addition Failed.'
-			// 		);
-			// 	}
-			// } else{
-			// 	$response=array(
-			// 				'status' => 0,
-			// 				'message' =>'Parameter Do Not Match'
-			// 			);
-			// }
-			$response=array('status' => 1, 'message' => 'success');
-			// set response code - 200 OK
-    		http_response_code(200);
+				if($result)
+				{
+					$response=array(
+						'status' => 1,
+						'message' =>'Patient Exercise Added Successfully.'
+					);
+				}
+				else
+				{
+					$response=array(
+						'status' => 0,
+						'query' => $query,
+						'message' =>'Patient Exercise Addition Failed.'
+					);
+				}
+			} else{
+				$response=array(
+							'status' => 0,
+							'message' =>'Parameter Do Not Match'
+						);
+			}
+			
 			echo json_encode($response);
 		}
 	
