@@ -16,8 +16,8 @@ class Patient {
 		}
 
 		$response=array (
-			'status' => 1,
-			'message' => 'Get patient data successfully.',
+			// 'status' => 1,
+			// 'message' => 'Get patient data successfully.',
 			'data' => $data
 		);
 
