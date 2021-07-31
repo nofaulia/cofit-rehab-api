@@ -1,4 +1,7 @@
 <?php 
+// required header
+header('Access-Control-Allow-Origin: *');
+
 require_once "patient.php";
 
 $patient = new Patient();
@@ -6,15 +9,15 @@ $patient = new Patient();
 $request_method=$_SERVER["REQUEST_METHOD"];
 
 if ($request_method == 'POST') {
-	if(!empty($_POST["email"]) && !empty($_POST["password"])) {
-		$email = $_POST["email"];
-		$password = $_POST["password"];
+	$data = (array) json_decode(file_get_contents('php://input'), TRUE);
 
-		$patient -> get_patient($email, $password);
-	} else {
-		// Invalid parameter
-		header("HTTP/1.0 400 Bad Request");
-	}
+	$username = $data["username"];
+	$password = $data["password"];
+
+	$patient -> get_patient($username, $password);
+	
+} elseif ($request_method == 'OPTIONS') {
+	$patient -> response_request();
 } else {
 	// Invalid Request Method
 	header("HTTP/1.0 405 Method Not Allowed");

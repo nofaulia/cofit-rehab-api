@@ -1,12 +1,19 @@
 <?php 
+// required header
+header('Access-Control-Allow-Origin: *');
+
 require_once "connection.php";
 
 class Patient {
 
-	// get patient data by email and password
-	public  function get_patient($email, $password) {
+	// get patient data by username and password
+	public  function get_patient($username, $password) {
 		global $con;
-		$query = "SELECT * FROM `pasien` WHERE email='$email' AND password='$password'";
+
+		// $password = md5($password);
+		$query = "SELECT id, kode, nama, no_rm 
+				  FROM `pasien` WHERE username='$username' AND password='$password'
+				  AND `is_active`=1";
 
 		$data = array();
 		$result = $con->query($query);
@@ -22,6 +29,13 @@ class Patient {
 		);
 
 		header('Content-Type: application/json');
+		echo json_encode($response);
+	}
+
+	public function response_request()
+	{
+		
+		$response=array('status' => 1, 'message' => 'success');
 		echo json_encode($response);
 	}
 }
