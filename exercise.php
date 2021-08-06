@@ -1,4 +1,4 @@
-<?php header('Access-Control-Allow-Origin: *');
+<?php 
 require_once "connection.php";
 
 class Exercise {

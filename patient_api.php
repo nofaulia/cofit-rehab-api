@@ -11,10 +11,10 @@ $request_method=$_SERVER["REQUEST_METHOD"];
 if ($request_method == 'POST') {
 	$data = (array) json_decode(file_get_contents('php://input'), TRUE);
 
-	$username = $data["username"];
+	$phonenumber = $data["phonenumber"];
 	$password = $data["password"];
 
-	$patient -> get_patient($username, $password);
+	$patient -> get_patient($phonenumber, $password);
 	
 } elseif ($request_method == 'OPTIONS') {
 	$patient -> response_request();

@@ -13,7 +13,9 @@ switch ($request_method) {
 		$eval -> response_request();
 		break;
 	case 'POST':
-		$eval -> insert_weekly_evaluation();
+		$data = (array) json_decode(file_get_contents('php://input'), TRUE);
+		// echo json_encode($data);
+		$eval -> insert_weekly_evaluation($data);
 		break;
 	case 'GET':
 		if (empty($_GET["patient_id"])) 

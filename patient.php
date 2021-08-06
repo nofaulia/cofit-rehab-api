@@ -6,13 +6,13 @@ require_once "connection.php";
 
 class Patient {
 
-	// get patient data by username and password
-	public  function get_patient($username, $password) {
+	// get patient data by phonenumber and password
+	public  function get_patient($phonenumber, $password) {
 		global $con;
 
 		// $password = md5($password);
 		$query = "SELECT id, kode, nama, no_rm 
-				  FROM `pasien` WHERE username='$username' AND password='$password'
+				  FROM `pasien` WHERE no_hp='$phonenumber' AND password='$password'
 				  AND `is_active`=1";
 
 		$data = array();
@@ -27,6 +27,10 @@ class Patient {
 			// 'message' => 'Get patient data successfully.',
 			'data' => $data
 		);
+
+		if (count($data) == 0) {
+			header("HTTP/1.0 404 Not Found");
+		}
 
 		header('Content-Type: application/json');
 		echo json_encode($response);

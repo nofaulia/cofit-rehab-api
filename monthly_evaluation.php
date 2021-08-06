@@ -61,7 +61,7 @@ class MonthlyEvaluation
 		echo json_encode($response);
 	}
 
-	public function insert_monthly_evaluation()
+	public function insert_monthly_evaluation($data)
 	{
 		global $con;
 		$arrcheckpost = array(
@@ -69,8 +69,8 @@ class MonthlyEvaluation
 			'uji_jalan' => '', 'kualitas_hidup' => '', 
 			'skala_sesak' => '', 'darah' => '' );
 		
-		if(count($_POST) == count($arrcheckpost)) {
-			$query = "INSERT INTO evaluasi_bulanan (id_pasien, tanggal, uji_jalan, kualitas_hidup, skala_sesak, darah) VALUES ($_POST[id_pasien], '$_POST[tanggal]', $_POST[uji_jalan], $_POST[kualitas_hidup], $_POST[skala_sesak], $_POST[darah])";
+		if(count($data) == count($arrcheckpost)) {
+			$query = "INSERT INTO evaluasi_bulanan (id_pasien, tanggal, uji_jalan, kualitas_hidup, skala_sesak, darah) VALUES ($data[id_pasien], '$data[tanggal]', $data[uji_jalan], $data[kualitas_hidup], $data[skala_sesak], $data[darah])";
 
 			$result = mysqli_query($con, $query);
 			
@@ -96,6 +96,7 @@ class MonthlyEvaluation
 					);
 		}
 		
+		header('Content-Type: application/json');
 		echo json_encode($response);
 	}
 }

@@ -2,7 +2,6 @@
 // required header
 header('Access-Control-Allow-Origin: *');
 
-
 require_once "connection.php";
 
 class WeeklyEvaluation 
@@ -61,15 +60,16 @@ class WeeklyEvaluation
 		echo json_encode($response);
 	}
 
-	public function insert_weekly_evaluation()
+	public function insert_weekly_evaluation($data)
 	{
 		global $con;
 		$arrcheckpost = array(
 			'id_pasien' => '', 'tanggal' => '', 
 			'rhr' => '', 'bfi' => '', 'sts30detik' => '' );
 		
-		if(count($_POST) == count($arrcheckpost)) {
-			$query = "INSERT INTO evaluasi_mingguan (id_pasien, tanggal, rhr, bfi, sts30detik) VALUES ($_POST[id_pasien], '$_POST[tanggal]', $_POST[rhr], $_POST[bfi], $_POST[sts30detik])";
+		if(count($data) == count($arrcheckpost)) {
+			$query = "INSERT INTO evaluasi_mingguan (id_pasien, tanggal, rhr, bfi, sts30detik) VALUES ($data[id_pasien], '$data[tanggal]', $data[rhr], $data[bfi],
+				$data[sts30detik])";
 
 			$result = mysqli_query($con, $query);
 			
@@ -94,7 +94,8 @@ class WeeklyEvaluation
 						'message' =>'Parameter Do Not Match'
 					);
 		}
-		
+
+		header('Content-Type: application/json');
 		echo json_encode($response);
 	}
 }

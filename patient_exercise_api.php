@@ -13,7 +13,8 @@ switch ($request_method) {
 		$patient_exercise -> response_request();
 		break;
 	case 'POST':
-		$patient_exercise -> insert_patient_exercise();
+		$data = (array) json_decode(file_get_contents('php://input'), TRUE);
+		$patient_exercise -> insert_patient_exercise($data);
 		break;
 	case 'GET':
 	// 	if (empty($_GET["patient_id"])) 
