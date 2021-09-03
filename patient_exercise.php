@@ -11,7 +11,7 @@ class PatientExercise
 	{
 		global $con;
 		$query = "SELECT * FROM `latihan_pasien` WHERE id_pasien=$patient_id";
-
+		
 		$data = array();
 		$result = $con->query($query);
 
@@ -64,25 +64,64 @@ class PatientExercise
 	}
 
 	public function insert_patient_exercise($data)
+	{
+		global $con;
+
+		$id_pasien = $data["id_pasien"];
+		$id_latihan = $data["id_latihan"];
+		$tanggal = $data["tanggal"];
+		$waktu_mulai = $data["waktu_mulai"];
+		$waktu_selesai = $data["waktu_selesai"];
+		$pra_bs = $data["pra_bs"];
+		$pasca_bs = $data["pasca_bs"];
+		$pra_sato2 = $data["pra_sato2"];
+		$pasca_sato2 = $data["pasca_sato2"];
+		$pra_hr = $data["pra_hr"];
+		$pasca_hr = $data["pasca_hr"];
+		
+		$query = "INSERT INTO latihan_pasien (
+					id_pasien, id_latihan, tanggal, waktu_mulai, waktu_selesai, 
+					pra_bs, pasca_bs, pra_sato2, pasca_sato2, pra_hr, pasca_hr)
+				  VALUES (
+				  	$id_pasien, $id_latihan, '$tanggal', '$waktu_mulai', 
+				  	'$waktu_selesai', $pra_bs, $pasca_bs, $pra_sato2, 
+				  	$pasca_sato2, $pra_hr, $pasca_hr)";
+
+
+		$result = mysqli_query($con, $query);
+		
+		if($result)
+		{
+			$last_id = $con->insert_id;
+			$response=array(
+				'status' => 1,
+				'message' =>'Patient Exercise Added Successfully.',
+				'last_id' => $last_id
+			);
+		}
+		else
+		{
+			$response=array(
+				'status' => 0,
+				'message' =>'Patient Exercise Addition Failed.'
+			);
+		}
+		
+		echo json_encode($response);
+	}
+
+	public function update_patient_exercise($data)
 		{
 			global $con;
 
-			$id_pasien = $data["id_pasien"];
-			$id_latihan = $data["id_latihan"];
-			$tanggal = $data["tanggal"];
-			$waktu_mulai = $data["waktu_mulai"];
-			$waktu_selesai = $data["waktu_selesai"];
-			$pra_bs = $data["pra_bs"];
-			$pasca_bs = $data["pasca_bs"];
+			$id_latihan_pasien = $data["id"];
 			$cd_bs = $data["cd_bs"];
-			$pra_sato2 = $data["pra_sato2"];
-			$pasca_sato2 = $data["pasca_sato2"];
 			$cd_sato2 = $data["cd_sato2"];
-			$pra_hr = $data["pra_hr"];
-			$pasca_hr = $data["pasca_hr"];
 			$cd_hr = $data["cd_hr"];
 			
-			$query = "INSERT INTO latihan_pasien (id_pasien, id_latihan, tanggal, waktu_mulai, waktu_selesai, pra_bs, pasca_bs, cd_bs, pra_sato2, pasca_sato2, cd_sato2, pra_hr, pasca_hr, cd_hr) VALUES ($id_pasien, $id_latihan, '$tanggal', '$waktu_mulai', '$waktu_selesai', $pra_bs, $pasca_bs, $cd_bs, $pra_sato2, $pasca_sato2, $cd_sato2, $pra_hr, $pasca_hr, $cd_hr)";
+			$query = "UPDATE latihan_pasien 
+					  SET cd_bs = $cd_bs, cd_sato2 = $cd_sato2, cd_hr = $cd_hr 
+					  WHERE id=$id_latihan_pasien";
 
 
 			$result = mysqli_query($con, $query);
@@ -91,7 +130,7 @@ class PatientExercise
 			{
 				$response=array(
 					'status' => 1,
-					'message' =>'Patient Exercise Added Successfully.'
+					'message' =>'Patient Exercise Updated Successfully.'
 				);
 			}
 			else
