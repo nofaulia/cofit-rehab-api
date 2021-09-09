@@ -72,6 +72,7 @@ class PatientExercise
 		$tanggal = $data["tanggal"];
 		$waktu_mulai = $data["waktu_mulai"];
 		$waktu_selesai = $data["waktu_selesai"];
+		$durasi_latihan = $data["durasi_latihan"];
 		$pra_bs = $data["pra_bs"];
 		$pasca_bs = $data["pasca_bs"];
 		$pra_sato2 = $data["pra_sato2"];
@@ -80,13 +81,12 @@ class PatientExercise
 		$pasca_hr = $data["pasca_hr"];
 		
 		$query = "INSERT INTO latihan_pasien (
-					id_pasien, id_latihan, tanggal, waktu_mulai, waktu_selesai, 
+					id_pasien, id_latihan, tanggal, waktu_mulai, waktu_selesai, durasi_latihan,
 					pra_bs, pasca_bs, pra_sato2, pasca_sato2, pra_hr, pasca_hr)
 				  VALUES (
 				  	$id_pasien, $id_latihan, '$tanggal', '$waktu_mulai', 
-				  	'$waktu_selesai', $pra_bs, $pasca_bs, $pra_sato2, 
+				  	'$waktu_selesai', $durasi_latihan, $pra_bs, $pasca_bs, $pra_sato2, 
 				  	$pasca_sato2, $pra_hr, $pasca_hr)";
-
 
 		$result = mysqli_query($con, $query);
 		
@@ -118,9 +118,14 @@ class PatientExercise
 			$cd_bs = $data["cd_bs"];
 			$cd_sato2 = $data["cd_sato2"];
 			$cd_hr = $data["cd_hr"];
+			$waktu_mulai_cd = $data["waktu_mulai_cd"];
+			$waktu_selesai_cd = $data["waktu_selesai_cd"];
+			$durasi_cd = $data["durasi_cd"];
 			
 			$query = "UPDATE latihan_pasien 
-					  SET cd_bs = $cd_bs, cd_sato2 = $cd_sato2, cd_hr = $cd_hr 
+					  SET cd_bs = $cd_bs, cd_sato2 = $cd_sato2, cd_hr = $cd_hr, 
+					  	waktu_mulai_cd = '$waktu_mulai_cd', waktu_selesai_cd = '$waktu_selesai_cd',
+					  	durasi_cd = $durasi_cd 
 					  WHERE id=$id_latihan_pasien";
 
 
