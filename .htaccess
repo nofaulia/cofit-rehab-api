@@ -21,4 +21,7 @@ RewriteRule ^monthly_evaluation/?$ monthly_evaluation_api.php [NC,L]
 RewriteRule ^monthly_evaluation/([0-9]+)/?$ monthly_evaluation_api.php?patient_id=$1 [NC,L]
 RewriteRule ^monthly_evaluation/([0-9]+)/?$ monthly_evaluation_api.php?patient_id=$1&start_date=$2&end_date=$3 [NC,L]
 
+RewriteRule ^endurance_level/?$ endurance_level_api.php [NC,L]
+RewriteRule ^endurance_level/([0-9]+)/?$ endurance_level_api.php?patient_id=$1 [NC,L]
+
 RewriteRule ^info/?$ info_api.php [NC,L]

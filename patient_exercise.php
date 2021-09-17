@@ -56,6 +56,27 @@ class PatientExercise
 		echo json_encode($response);
 	}
 
+	public function get_patient_endurance_exercises($patient_id, $limit, $order)
+	{
+		global $con;
+
+		$query = "SELECT id, id_pasien, id_latihan, pasca_bs, pasca_hr 
+				  FROM `latihan_pasien` 
+				  JOIN (
+				  	SELECT id as exercise_id FROM latihan WHERE tipe=2) as A
+				  ON A.exercise_id = id_latihan
+				  WHERE id_pasien = $patient_id ORDER BY `id` $order LIMIT $limit";
+		
+		$data = array();
+		$result = $con->query($query);
+
+		while ($row=mysqli_fetch_object($result)) {
+			$data[] = $row;
+		}
+
+		return $data;
+	}
+
 	public function response_request()
 	{
 		

@@ -16,6 +16,10 @@ if ($request_method == 'POST') {
 
 	$patient -> get_patient($phonenumber, $password);
 	
+} elseif($request_method == 'GET'){
+	$patient_id = $_GET["patient_id"];
+	$patient -> calculateMaxHR($patient_id);
+		
 } elseif ($request_method == 'OPTIONS') {
 	$patient -> response_request();
 } else {
