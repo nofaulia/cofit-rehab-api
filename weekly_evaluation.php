@@ -64,11 +64,10 @@ class WeeklyEvaluation
 	{
 		global $con;
 		$arrcheckpost = array(
-			'id_pasien' => '', 'tanggal' => '', 
-			'rhr' => '', 'bfi' => '', 'sts30detik' => '' );
+			'id_pasien' => '', 'tanggal' => '', 'bfi' => '', 'sts30detik' => '' );
 		
 		if(count($data) == count($arrcheckpost)) {
-			$query = "INSERT INTO evaluasi_mingguan (id_pasien, tanggal, rhr, bfi, sts30detik) VALUES ($data[id_pasien], '$data[tanggal]', $data[rhr], $data[bfi],
+			$query = "INSERT INTO evaluasi_mingguan (id_pasien, tanggal, bfi, sts30detik) VALUES ($data[id_pasien], '$data[tanggal]', $data[bfi],
 				$data[sts30detik])";
 
 			$result = mysqli_query($con, $query);
