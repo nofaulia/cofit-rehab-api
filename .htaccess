@@ -13,6 +13,10 @@ RewriteRule ^patient_exercise/?$ patient_exercise_api.php [NC,L]
 RewriteRule ^patient_exercise/([0-9]+)/?$ patient_exercise_api.php?patient_id=$1 [NC,L]
 RewriteRule ^patient_exercise/([0-9]+)/?$ patient_exercise_api.php?patient_id=$1&start_date=$2&end_date=$3 [NC,L]
 
+RewriteRule ^daily_evaluation/?$ daily_evaluation_api.php [NC,L]
+RewriteRule ^daily_evaluation/([0-9]+)/?$ daily_evaluation_api.php?patient_id=$1 [NC,L]
+RewriteRule ^daily_evaluation/([0-9]+)/?$ daily_evaluation_api.php?patient_id=$1&start_date=$2&end_date=$3 [NC,L]
+
 RewriteRule ^weekly_evaluation/?$ weekly_evaluation_api.php [NC,L]
 RewriteRule ^weekly_evaluation/([0-9]+)/?$ weekly_evaluation_api.php?patient_id=$1 [NC,L]
 RewriteRule ^weekly_evaluation/([0-9]+)/?$ weekly_evaluation_api.php?patient_id=$1&start_date=$2&end_date=$3 [NC,L]

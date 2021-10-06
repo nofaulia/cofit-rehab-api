@@ -2,15 +2,14 @@
 // required header
 header('Access-Control-Allow-Origin: *');
 
-
 require_once "connection.php";
 
-class MonthlyEvaluation 
+class DailyEvaluation 
 {
-	public function get_all_monthly_evaluation($patient_id)
+	public function get_all_daily_evaluation($patient_id)
 	{
 		global $con;
-		$query = "SELECT * FROM `evaluasi_bulanan` WHERE id_pasien=$patient_id";
+		$query = "SELECT * FROM `evaluasi_harian` WHERE id_pasien=$patient_id";
 
 		$data = array();
 		$result = $con->query($query);
@@ -21,19 +20,19 @@ class MonthlyEvaluation
 
 		$response=array (
 			// 'status' => 1,
-			// 'message' => 'Get monthly evaluation successfully.',
+			// 'message' => 'Get daily evaluation successfully.',
 			'data' => $data
 		);
 
 		echo json_encode($response);
 	}
 
-	public function get_monthly_evaluation($patient_id, $start_date, $end_date)
+	public function get_daily_evaluation($patient_id, $start_date, $end_date)
 	{
 		global $con;
 		$query = "
 			SELECT * 
-			FROM `evaluasi_bulanan` 
+			FROM `evaluasi_harian` 
 			WHERE id_pasien=$patient_id 
 				AND tanggal >='$start_date' 
 				AND tanggal <= '$end_date'";
@@ -47,7 +46,7 @@ class MonthlyEvaluation
 
 		$response=array (
 			// 'status' => 1,
-			// 'message' => 'Get monthly evaluation successfully.',
+			// 'message' => 'Get daily evaluation successfully.',
 			'data' => $data
 		);
 
@@ -61,16 +60,15 @@ class MonthlyEvaluation
 		echo json_encode($response);
 	}
 
-	public function insert_monthly_evaluation($data)
+	public function insert_daily_evaluation($data)
 	{
 		global $con;
 		$arrcheckpost = array(
 			'id_pasien' => '', 'tanggal' => '', 
-			'uji_jalan' => '', 'skala_sesak' => '', 
-			'sistolik' => '', 'diastolik' => '' );
+			'rhr' => '');
 		
 		if(count($data) == count($arrcheckpost)) {
-			$query = "INSERT INTO evaluasi_bulanan (id_pasien, tanggal, uji_jalan, skala_sesak, sistolik, diastolik) VALUES ($data[id_pasien], '$data[tanggal]', $data[uji_jalan], $data[skala_sesak], $data[sistolik], $data[diastolik])";
+			$query = "INSERT INTO evaluasi_harian (id_pasien, tanggal, rhr) VALUES ($data[id_pasien], '$data[tanggal]', $data[rhr])";
 
 			$result = mysqli_query($con, $query);
 			
@@ -78,7 +76,7 @@ class MonthlyEvaluation
 			{
 				$response=array(
 					'status' => 1,
-					'message' =>'Monthly Evaluation Added Successfully.'
+					'message' =>'Daily Evaluation Added Successfully.'
 				);
 			}
 			else
@@ -86,7 +84,7 @@ class MonthlyEvaluation
 				$response=array(
 					'status' => 0,
 					'query' => $query,
-					'message' =>'Monthly Evaluation Addition Failed.'
+					'message' =>'Daily Evaluation Addition Failed.'
 				);
 			}
 		} else{
@@ -95,7 +93,7 @@ class MonthlyEvaluation
 						'message' =>'Parameter Do Not Match'
 					);
 		}
-		
+
 		header('Content-Type: application/json');
 		echo json_encode($response);
 	}
