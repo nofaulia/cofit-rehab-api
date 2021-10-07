@@ -7,10 +7,21 @@ require_once "connection.php";
 
 class PatientExercise 
 {
-	public function get_all_patient_exercise($patient_id)
+	public function get_patient_exercise_by_type($patient_id, $type)
 	{
+		/**
+		Types: 1. Breathing 2. Endurance 3. Strength
+		*/
+
 		global $con;
-		$query = "SELECT * FROM `latihan_pasien` WHERE id_pasien=$patient_id";
+
+		$query = "SELECT id, id_pasien, id_latihan, tanggal, pra_bs, pasca_bs, 
+		            pra_hr, pasca_hr, pra_sato2, pasca_sato2 
+				  FROM `latihan_pasien` 
+				  JOIN (
+				  	SELECT id as exercise_id FROM latihan WHERE tipe=$type) as A
+				  ON A.exercise_id = id_latihan
+				  WHERE id_pasien = $patient_id ORDER BY `id`";
 		
 		$data = array();
 		$result = $con->query($query);
@@ -18,6 +29,31 @@ class PatientExercise
 		while ($row=mysqli_fetch_object($result)) {
 			$data[] = $row;
 		}
+
+		return $data;
+	}
+
+	public function get_all_patient_exercise($patient_id)
+	{
+		// global $con;
+		// $query = "SELECT * FROM `latihan_pasien` WHERE id_pasien=$patient_id";
+		
+		// $data = array();
+		// $result = $con->query($query);
+
+		// while ($row=mysqli_fetch_object($result)) {
+		// 	$data[] = $row;
+		// }
+
+		$data = array();
+
+		$breathing_exercise_data = $this->get_patient_exercise_by_type($patient_id, 1);
+		$endurance_exercise_data = $this->get_patient_exercise_by_type($patient_id, 2);
+		$strength_exercise_data = $this->get_patient_exercise_by_type($patient_id, 3);
+
+		$data["breathing"] = $breathing_exercise_data;
+		$data["endurance"] = $endurance_exercise_data;
+		$data["strength"] = $strength_exercise_data;
 
 		$response=array (
 			'status' => 1,
